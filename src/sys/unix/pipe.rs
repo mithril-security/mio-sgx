@@ -2,7 +2,7 @@
 //!
 //! See the [`new`] function for documentation.
 
-use std::fs::File;
+use std::untrusted::fs::File; //sgx_tstd::sgxfs::SgxFile or sgx_tstd::untrusted::fs::File? SgxFile does not implement FromRawFd
 use std::io::{self, IoSlice, IoSliceMut, Read, Write};
 use std::os::unix::io::{AsRawFd, FromRawFd, IntoRawFd, RawFd};
 use std::process::{ChildStderr, ChildStdin, ChildStdout};
@@ -194,6 +194,7 @@ pub fn new() -> io::Result<(Sender, Receiver)> {
         target_os = "macos",
         target_os = "solaris",
         target_os = "illumos",
+        target_env = "sgx"
     )))]
     compile_error!("unsupported target for `mio::unix::pipe`");
 
@@ -402,7 +403,7 @@ impl IntoRawFd for Receiver {
 #[cfg(not(target_os = "illumos"))]
 fn set_nonblocking(fd: RawFd, nonblocking: bool) -> io::Result<()> {
     let value = nonblocking as libc::c_int;
-    if unsafe { libc::ioctl(fd, libc::FIONBIO, &value) } == -1 {
+    if unsafe { libc::ocall::ioctl_arg1(fd, libc::FIONBIO, &mut value) } == -1 {
         Err(io::Error::last_os_error())
     } else {
         Ok(())

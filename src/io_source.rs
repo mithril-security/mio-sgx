@@ -1,5 +1,5 @@
 use std::ops::{Deref, DerefMut};
-#[cfg(unix)]
+#[cfg(any(unix, target_env = "sgx"))]
 use std::os::unix::io::AsRawFd;
 #[cfg(windows)]
 use std::os::windows::io::AsRawSocket;
@@ -7,7 +7,7 @@ use std::os::windows::io::AsRawSocket;
 use std::sync::atomic::{AtomicUsize, Ordering};
 use std::{fmt, io};
 
-#[cfg(any(unix, debug_assertions))]
+#[cfg(any(unix, debug_assertions, target_env = "sgx"))]
 use crate::poll;
 use crate::sys::IoSourceState;
 use crate::{event, Interest, Registry, Token};
@@ -129,7 +129,7 @@ impl<T> DerefMut for IoSource<T> {
     }
 }
 
-#[cfg(unix)]
+#[cfg(any(unix, target_env = "sgx"))]
 impl<T> event::Source for IoSource<T>
 where
     T: AsRawFd,

@@ -40,7 +40,7 @@
 //! ## Available features
 //!
 //! The available features are described in the [`features`] module.
-
+extern crate sgx_libc as libc;
 // macros used internally
 #[macro_use]
 mod macros;

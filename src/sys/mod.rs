@@ -51,7 +51,7 @@ cfg_os_poll! {
     }
 }
 
-#[cfg(unix)]
+#[cfg(any(unix, target_env="sgx"))]
 cfg_os_poll! {
     mod unix;
     pub use self::unix::*;

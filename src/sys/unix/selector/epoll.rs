@@ -222,9 +222,9 @@ pub mod event {
             libc::EPOLLET,
             libc::EPOLLRDHUP,
             libc::EPOLLONESHOT,
-            #[cfg(any(target_os = "linux", target_os = "solaris"))]
+            #[cfg(any(target_os = "linux", target_os = "solaris", target_env="sgx"))]
             libc::EPOLLEXCLUSIVE,
-            #[cfg(any(target_os = "android", target_os = "linux"))]
+            #[cfg(any(target_os = "android", target_os = "linux", target_env="sgx"))]
             libc::EPOLLWAKEUP,
             libc::EPOLL_CLOEXEC,
         );

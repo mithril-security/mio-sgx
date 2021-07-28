@@ -13,7 +13,7 @@ pub use self::tcp::{TcpListener, TcpSocket, TcpStream, TcpKeepalive};
 mod udp;
 pub use self::udp::UdpSocket;
 
-#[cfg(unix)]
+#[cfg(any(unix, target_env = "sgx"))]
 mod uds;
-#[cfg(unix)]
+#[cfg(any(unix, target_env = "sgx"))]
 pub use self::uds::{SocketAddr, UnixDatagram, UnixListener, UnixStream};

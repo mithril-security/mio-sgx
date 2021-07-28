@@ -2,7 +2,8 @@
     target_os = "android",
     target_os = "illumos",
     target_os = "linux",
-    target_os = "solaris"
+    target_os = "solaris",
+    target_env = "sgx"
 ))]
 mod epoll;
 
@@ -10,7 +11,8 @@ mod epoll;
     target_os = "android",
     target_os = "illumos",
     target_os = "linux",
-    target_os = "solaris"
+    target_os = "solaris",
+    target_env = "sgx"
 ))]
 pub(crate) use self::epoll::{event, Event, Events, Selector};
 

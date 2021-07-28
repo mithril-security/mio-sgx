@@ -37,7 +37,7 @@ pub(crate) fn bind(socket: TcpSocket, addr: SocketAddr) -> io::Result<()> {
     Ok(())
 }
 
-pub(crate) fn connect(socket: TcpSocket, addr: SocketAddr) -> io::Result<net::TcpStream> {
+pub(crate) fn connect(socket: TcpSocket, addr: SocketAddr) -> io::Result<net::TcpStream> { //net::TcpStream not in sgx_tstd
     let (raw_addr, raw_addr_length) = socket_addr(&addr);
 
     match syscall!(connect(socket, raw_addr.as_ptr(), raw_addr_length)) {
@@ -440,7 +440,8 @@ pub fn accept(listener: &net::TcpListener) -> io::Result<(net::TcpStream, Socket
         target_os = "illumos",
         target_os = "linux",
         target_os = "netbsd",
-        target_os = "openbsd"
+        target_os = "openbsd",
+        target_env = "sgx"
     ))]
     let stream = {
         syscall!(accept4(

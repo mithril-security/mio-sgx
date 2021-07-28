@@ -1,9 +1,9 @@
-#[cfg(any(target_os = "linux", target_os = "android"))]
+#[cfg(any(target_os = "linux", target_os = "android", target_env="sgx"))]
 mod eventfd {
     use crate::sys::Selector;
     use crate::{Interest, Token};
 
-    use std::fs::File;
+    use std::untrusted::fs::File;
     use std::io::{self, Read, Write};
     use std::os::unix::io::FromRawFd;
 
@@ -20,7 +20,7 @@ mod eventfd {
 
     impl Waker {
         pub fn new(selector: &Selector, token: Token) -> io::Result<Waker> {
-            syscall!(eventfd(0, libc::EFD_CLOEXEC | libc::EFD_NONBLOCK)).and_then(|fd| {
+            syscall!(eventfd(0, libc::EFD_CLOEXEC | libc::EFD_NONBLOCK)).and_then(|fd| { //eventfd not in sgx_libc
                 // Turn the file descriptor into a file first so we're ensured
                 // it's closed when dropped, e.g. when register below fails.
                 let file = unsafe { File::from_raw_fd(fd) };
@@ -58,7 +58,7 @@ mod eventfd {
     }
 }
 
-#[cfg(any(target_os = "linux", target_os = "android"))]
+#[cfg(any(target_os = "linux", target_os = "android", target_env= "sgx"))]
 pub use self::eventfd::Waker;
 
 #[cfg(any(target_os = "freebsd", target_os = "ios", target_os = "macos"))]
