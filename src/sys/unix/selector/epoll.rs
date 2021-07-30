@@ -40,6 +40,19 @@ impl Selector {
         })
     }
 
+    #[cfg(target_env="sgx")]
+    pub fn try_clone(&self) -> io::Result<Selector> {
+        syscall!(fcntl_arg1(self.ep, libc::F_DUPFD_CLOEXEC, super::LOWEST_FD)).map(|ep| Selector {
+            // It's the same selector, so we use the same id.
+            #[cfg(debug_assertions)]
+            id: self.id,
+            ep,
+            #[cfg(debug_assertions)]
+            has_waker: AtomicBool::new(self.has_waker.load(Ordering::Acquire)),
+        })
+    }
+
+    #[cfg(not(target_env="sgx"))]
     pub fn try_clone(&self) -> io::Result<Selector> {
         syscall!(fcntl(self.ep, libc::F_DUPFD_CLOEXEC, super::LOWEST_FD)).map(|ep| Selector {
             // It's the same selector, so we use the same id.

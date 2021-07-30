@@ -2,9 +2,22 @@
 //
 // Macro must be defined before any modules that uses them.
 #[allow(unused_macros)]
+#[cfg(target_env = "sgx")]
 macro_rules! syscall {
     ($fn: ident ( $($arg: expr),* $(,)* ) ) => {{
         let res = unsafe { libc::ocall::$fn($($arg, )*) };
+        if res == -1 {
+            Err(std::io::Error::last_os_error())
+        } else {
+            Ok(res)
+        }
+    }};
+}
+
+#[cfg(not(target_env = "sgx"))]
+macro_rules! syscall {
+    ($fn: ident ( $($arg: expr),* $(,)* ) ) => {{
+        let res = unsafe { libc::$fn($($arg, )*) };
         if res == -1 {
             Err(std::io::Error::last_os_error())
         } else {

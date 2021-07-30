@@ -1,7 +1,7 @@
 use std::io;
 use std::mem;
 use std::net::SocketAddr;
-#[cfg(unix)]
+#[cfg(any(unix, target_env = "sgx"))]
 use std::os::unix::io::{AsRawFd, FromRawFd, IntoRawFd, RawFd};
 #[cfg(windows)]
 use std::os::windows::io::{AsRawSocket, FromRawSocket, IntoRawSocket, RawSocket};
@@ -108,14 +108,14 @@ impl TcpSocket {
 
     /// Sets the value of `SO_REUSEPORT` on this socket.
     /// Only supported available in unix
-    #[cfg(all(unix, not(any(target_os = "solaris", target_os = "illumos"))))]
+    #[cfg(all(any(unix, target_env = "sgx"), not(any(target_os = "solaris", target_os = "illumos"))))]
     pub fn set_reuseport(&self, reuseport: bool) -> io::Result<()> {
         sys::tcp::set_reuseport(self.sys, reuseport)
     }
 
     /// Get the value of `SO_REUSEPORT` set on this socket.
     /// Only supported available in unix
-    #[cfg(all(unix, not(any(target_os = "solaris", target_os = "illumos"))))]
+    #[cfg(all(any(unix, target_env = "sgx"), not(any(target_os = "solaris", target_os = "illumos"))))]
     pub fn get_reuseport(&self) -> io::Result<bool> {
         sys::tcp::get_reuseport(self.sys)
     }
@@ -335,7 +335,7 @@ impl Drop for TcpSocket {
     }
 }
 
-#[cfg(unix)]
+#[cfg(any(unix, target_env = "sgx"))]
 impl IntoRawFd for TcpSocket {
     fn into_raw_fd(self) -> RawFd {
         let ret = self.sys;
@@ -345,14 +345,14 @@ impl IntoRawFd for TcpSocket {
     }
 }
 
-#[cfg(unix)]
+#[cfg(any(unix, target_env = "sgx"))]
 impl AsRawFd for TcpSocket {
     fn as_raw_fd(&self) -> RawFd {
         self.sys
     }
 }
 
-#[cfg(unix)]
+#[cfg(any(unix, target_env = "sgx"))]
 impl FromRawFd for TcpSocket {
     /// Converts a `RawFd` to a `TcpSocket`.
     ///

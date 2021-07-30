@@ -40,6 +40,7 @@
 //! ## Available features
 //!
 //! The available features are described in the [`features`] module.
+#[cfg(target_env = "sgx")]
 extern crate sgx_libc as libc;
 // macros used internally
 #[macro_use]

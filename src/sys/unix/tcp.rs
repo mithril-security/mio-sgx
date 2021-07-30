@@ -87,7 +87,7 @@ pub(crate) fn get_reuseaddr(socket: TcpSocket) -> io::Result<bool> {
     Ok(optval != 0)
 }
 
-#[cfg(all(unix, not(any(target_os = "solaris", target_os = "illumos"))))]
+#[cfg(all(any(unix, target_env = "sgx"), not(any(target_os = "solaris", target_os = "illumos"))))]
 pub(crate) fn set_reuseport(socket: TcpSocket, reuseport: bool) -> io::Result<()> {
     let val: libc::c_int = if reuseport { 1 } else { 0 };
 
@@ -101,7 +101,7 @@ pub(crate) fn set_reuseport(socket: TcpSocket, reuseport: bool) -> io::Result<()
     .map(|_| ())
 }
 
-#[cfg(all(unix, not(any(target_os = "solaris", target_os = "illumos"))))]
+#[cfg(all(any(unix, target_env = "sgx"), not(any(target_os = "solaris", target_os = "illumos"))))]
 pub(crate) fn get_reuseport(socket: TcpSocket) -> io::Result<bool> {
     let mut optval: libc::c_int = 0;
     let mut optlen = mem::size_of::<libc::c_int>() as libc::socklen_t;

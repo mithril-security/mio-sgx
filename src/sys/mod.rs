@@ -67,13 +67,13 @@ cfg_not_os_poll! {
     mod shell;
     pub(crate) use self::shell::*;
 
-    #[cfg(unix)]
+    #[cfg(any(unix, target_env = "sgx"))]
     cfg_any_os_ext! {
         mod unix;
         pub use self::unix::SourceFd;
     }
 
-    #[cfg(unix)]
+    #[cfg(any(unix, target_env = "sgx"))]
     cfg_net! {
         pub use self::unix::SocketAddr;
     }

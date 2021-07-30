@@ -161,5 +161,6 @@ impl FromRawFd for UnixDatagram {
     /// non-blocking mode.
     unsafe fn from_raw_fd(fd: RawFd) -> UnixDatagram {
         UnixDatagram::from_std(FromRawFd::from_raw_fd(fd))
+        // Problem: sgx_tstd::os::unix::io::RawFd does not implement FromRawFd trait.
     }
 }

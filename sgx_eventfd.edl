@@ -1,0 +1,12 @@
+// This edl file is meant for the system call for eventfd in the libc crate.<<
+
+enclave {
+
+	trusted {
+        /* define ECALLs here. */
+    };
+
+    untrusted {
+        uint64_t eventfd_ocall(uint64_t init, uint64_t flags);
+    };
+};

@@ -1,11 +1,22 @@
 #[cfg(any(target_os = "linux", target_os = "android", target_env="sgx"))]
 mod eventfd {
+
     use crate::sys::Selector;
     use crate::{Interest, Token};
 
+    #[cfg(target_env="sgx")]
     use std::untrusted::fs::File;
+
+    #[cfg(not(target_env="sgx"))]
+    use std::fs::File;
+
     use std::io::{self, Read, Write};
     use std::os::unix::io::FromRawFd;
+
+
+    // The general idea here is to use eventfd not as a function of libc (because it isn't available in sgx_libc), but an ocall to the system.
+    // Upon the ocall, the system will perform eventfd in the enclave's place.
+    // Put this function in the edl file. This function does an ocall for the host to do eventfd in the enclave's place.
 
     /// Waker backed by `eventfd`.
     ///
@@ -18,9 +29,10 @@ mod eventfd {
         fd: File,
     }
 
+
     impl Waker {
         pub fn new(selector: &Selector, token: Token) -> io::Result<Waker> {
-            syscall!(eventfd(0, libc::EFD_CLOEXEC | libc::EFD_NONBLOCK)).and_then(|fd| { //eventfd not in sgx_libc
+            syscall!(eventfd(0, libc::EFD_CLOEXEC | libc::EFD_NONBLOCK)).and_then(|fd| {
                 // Turn the file descriptor into a file first so we're ensured
                 // it's closed when dropped, e.g. when register below fails.
                 let file = unsafe { File::from_raw_fd(fd) };

@@ -13,7 +13,7 @@ pub(crate) use self::waker::Waker;
 cfg_net! {
     pub(crate) mod tcp;
     pub(crate) mod udp;
-    #[cfg(unix)]
+    #[cfg(any(unix, target_env = "sgx"))]
     pub(crate) mod uds;
 }
 

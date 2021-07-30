@@ -1,5 +1,5 @@
 use std::net::{self, SocketAddr};
-#[cfg(unix)]
+#[cfg(any(unix, target_env = "sgx"))]
 use std::os::unix::io::{AsRawFd, FromRawFd, IntoRawFd, RawFd};
 #[cfg(windows)]
 use std::os::windows::io::{AsRawSocket, FromRawSocket, IntoRawSocket, RawSocket};
@@ -154,21 +154,21 @@ impl fmt::Debug for TcpListener {
     }
 }
 
-#[cfg(unix)]
+#[cfg(any(unix, target_env = "sgx"))]
 impl IntoRawFd for TcpListener {
     fn into_raw_fd(self) -> RawFd {
         self.inner.into_inner().into_raw_fd()
     }
 }
 
-#[cfg(unix)]
+#[cfg(any(unix, target_env = "sgx"))]
 impl AsRawFd for TcpListener {
     fn as_raw_fd(&self) -> RawFd {
         self.inner.as_raw_fd()
     }
 }
 
-#[cfg(unix)]
+#[cfg(any(unix, target_env = "sgx"))]
 impl FromRawFd for TcpListener {
     /// Converts a `RawFd` to a `TcpListener`.
     ///

@@ -155,9 +155,10 @@ pub fn new() -> io::Result<(Sender, Receiver)> {
         target_os = "netbsd",
         target_os = "openbsd",
         target_os = "illumos",
+        target_env = "sgx"
     ))]
     unsafe {
-        if libc::pipe2(fds.as_mut_ptr(), libc::O_CLOEXEC | libc::O_NONBLOCK) != 0 {
+        if libc::ocall::pipe2(fds.as_mut_ptr(), libc::O_CLOEXEC | libc::O_NONBLOCK) != 0 {
             return Err(io::Error::last_os_error());
         }
     }

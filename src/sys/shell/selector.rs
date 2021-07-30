@@ -1,5 +1,5 @@
 use std::io;
-#[cfg(unix)]
+#[cfg(any(unix, target_env = "sgx"))]
 use std::os::unix::io::{AsRawFd, RawFd};
 use std::time::Duration;
 
@@ -25,7 +25,7 @@ impl Selector {
     }
 }
 
-#[cfg(unix)]
+#[cfg(any(unix, target_env = "sgx"))]
 cfg_any_os_ext! {
     use crate::{Interest, Token};
 
@@ -53,7 +53,7 @@ cfg_io_source! {
     }
 }
 
-#[cfg(unix)]
+#[cfg(any(unix, target_env = "sgx"))]
 impl AsRawFd for Selector {
     fn as_raw_fd(&self) -> RawFd {
         os_required!()
