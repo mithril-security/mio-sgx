@@ -33,6 +33,7 @@ pub struct TcpKeepalive {
         target_os = "freebsd",
         target_os = "netbsd",
         target_os = "windows",
+        target_env = "sgx"
     ))]
     pub(crate) interval: Option<Duration>,
     #[cfg(any(
@@ -41,6 +42,7 @@ pub struct TcpKeepalive {
         target_os = "ios",
         target_os = "freebsd",
         target_os = "netbsd",
+        target_env = "sgx"
     ))]
     pub(crate) retries: Option<u32>,
 }
@@ -279,6 +281,7 @@ impl TcpSocket {
             target_os = "ios",
             target_os = "freebsd",
             target_os = "netbsd",
+            target_env = "sgx"
         )))
     )]
     #[cfg(any(
@@ -287,6 +290,7 @@ impl TcpSocket {
         target_os = "ios",
         target_os = "freebsd",
         target_os = "netbsd",
+        target_env = "sgx"
     ))]
     pub fn get_keepalive_interval(&self) -> io::Result<Option<Duration>> {
         sys::tcp::get_keepalive_interval(self.sys)
@@ -316,6 +320,7 @@ impl TcpSocket {
         target_os = "ios",
         target_os = "freebsd",
         target_os = "netbsd",
+        target_env = "sgx"
     ))]
     pub fn get_keepalive_retries(&self) -> io::Result<Option<u32>> {
         sys::tcp::get_keepalive_retries(self.sys)
@@ -437,6 +442,7 @@ impl TcpKeepalive {
             target_os = "freebsd",
             target_os = "netbsd",
             target_os = "windows"
+            target_env = "sgx"
         )))
     )]
     #[cfg(any(
@@ -445,7 +451,8 @@ impl TcpKeepalive {
         target_os = "ios",
         target_os = "freebsd",
         target_os = "netbsd",
-        target_os = "windows"
+        target_os = "windows",
+        target_env = "sgx"
     ))]
     pub fn with_interval(self, interval: Duration) -> Self {
         Self {
@@ -467,6 +474,7 @@ impl TcpKeepalive {
             target_os = "ios",
             target_os = "freebsd",
             target_os = "netbsd",
+            target_env = "sgx"
         )))
     )]
     #[cfg(any(
@@ -475,6 +483,7 @@ impl TcpKeepalive {
         target_os = "ios",
         target_os = "freebsd",
         target_os = "netbsd",
+        target_env = "sgx"
     ))]
     pub fn with_retries(self, retries: u32) -> Self {
         Self {

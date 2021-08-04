@@ -263,6 +263,7 @@ pub(crate) fn set_keepalive_params(socket: TcpSocket, keepalive: TcpKeepalive) -
         target_os = "ios",
         target_os = "freebsd",
         target_os = "netbsd",
+        target_env = "sgx"
     ))]
     {
         if let Some(dur) = keepalive.interval {
@@ -327,6 +328,7 @@ pub(crate) fn get_keepalive_time(socket: TcpSocket) -> io::Result<Option<Duratio
     target_os = "ios",
     target_os = "freebsd",
     target_os = "netbsd",
+    target_env = "sgx"
 ))]
 fn set_keepalive_interval(socket: TcpSocket, interval: Duration) -> io::Result<()> {
     let interval_secs = interval
@@ -350,6 +352,7 @@ fn set_keepalive_interval(socket: TcpSocket, interval: Duration) -> io::Result<(
     target_os = "ios",
     target_os = "freebsd",
     target_os = "netbsd",
+    target_env = "sgx"
 ))]
 pub(crate) fn get_keepalive_interval(socket: TcpSocket) -> io::Result<Option<Duration>> {
     if !get_keepalive(socket)? {
@@ -384,6 +387,7 @@ pub(crate) fn get_keepalive_interval(socket: TcpSocket) -> io::Result<Option<Dur
     target_os = "ios",
     target_os = "freebsd",
     target_os = "netbsd",
+    target_env = "sgx"
 ))]
 fn set_keepalive_retries(socket: TcpSocket, retries: u32) -> io::Result<()> {
     let retries = retries.try_into().ok().unwrap_or_else(i32::max_value);
@@ -403,6 +407,7 @@ fn set_keepalive_retries(socket: TcpSocket, retries: u32) -> io::Result<()> {
     target_os = "ios",
     target_os = "freebsd",
     target_os = "netbsd",
+    target_env = "sgx"
 ))]
 pub(crate) fn get_keepalive_retries(socket: TcpSocket) -> io::Result<Option<u32>> {
     if !get_keepalive(socket)? {
