@@ -1,0 +1,11 @@
+[package]
+name = "app"
+version = "1.0.0"
+authors = ["Teaclave"]
+build = "build.rs"
+
+[dependencies] # You can specify the features you need for urts, such as global_exit and global_init
+sgx_types = { path = "/root/dev/incubator-teaclave-sgx-sdk/sgx_types" }
+sgx_urts = { path = "/root/dev/incubator-teaclave-sgx-sdk/sgx_urts" }
+
+# [patch.'https://github.com/apache/teaclave-sgx-sdk.git']

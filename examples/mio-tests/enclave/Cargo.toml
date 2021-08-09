@@ -1,0 +1,42 @@
+cargo-features = ["resolver"]
+[package]
+name = "template"
+version = "1.0.0"
+edition = "2018"
+authors = ["The Teaclave Authors"]
+resolver = "2"
+[lib]
+name = "sample" # Library name. If you change this, please reflect those changes in the Makefile on the variable ENCLAVE_CARGO_LIB
+crate-type = ["staticlib"] 
+[features]
+default = ["os-poll", "net", "untrusted_time"]
+untrusted_time = []
+
+# Enables the `Poll` and `Registry` types.
+os-poll = []
+# Enables additional OS specific extensions, e.g. Unix `pipe(2)`.
+os-ext = ["os-poll"]
+# Enables `mio::net` module containing networking primitives.
+net = []
+
+# Deprecated features, will be removed in a future version.
+extra-docs = [] # Docs are now always present.
+tcp = ["net"] # Replaced with "net" feature.
+udp = ["net"] # Replaced with "net" feature.
+uds = ["net"] # Replaced with "net" feature.
+pipe = ["os-ext"] # Replaced with "os-ext" feature.
+os-util = ["os-ext"]# Replaced with "os-ext" feature.
+
+[dependencies]
+mio = { path = "../../../", features = ['net','os-poll','tcp','udp','uds'] }
+log = "0.4.8"
+env_logger = { version = "0.6.2", default-features = false }
+
+
+[patch.crates-io]
+
+
+
+
+
+
