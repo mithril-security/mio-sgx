@@ -429,6 +429,10 @@ pub fn test_tcp_stream() {
         print!("Success.\n");
     }
 
+    print!("Testing tcp_shutdown_server_write_close_event()... ");
+    tcp_stream::tcp_shutdown_server_write_close_event();
+    print!("Success.\n");
+
     print!("Testing hup_event_on_disconnect()... ");
     tcp_stream::hup_event_on_disconnect();
     print!("Success.\n");

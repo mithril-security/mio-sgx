@@ -301,7 +301,7 @@ pub fn unix_stream_shutdown_both() {
     }
 
     let err = stream.write(DATA2).unwrap_err();
-    #[cfg(unix)]
+    #[cfg(any(unix, target_env = "sgx"))]
     assert_eq!(err.kind(), io::ErrorKind::BrokenPipe);
     #[cfg(window)]
     assert_eq!(err.kind(), io::ErrorKind::ConnectionAbroted);

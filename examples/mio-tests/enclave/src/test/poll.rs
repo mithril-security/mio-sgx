@@ -113,11 +113,8 @@ pub fn poll_closes_fd() {
 pub fn drop_cancels_interest_and_shuts_down() {
     init();
 
-    use mio::net::TcpStream;
-    use std::io;
     use std::io::Read;
     use std::net::TcpListener;
-    use std::thread;
 
     let listener = TcpListener::bind("127.0.0.1:0").unwrap();
     let addr = listener.local_addr().unwrap();
