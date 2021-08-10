@@ -108,12 +108,10 @@ where
     assert_would_block(stream.read(&mut buf));
 
     let bufs = [IoSlice::new(&DATA1), IoSlice::new(&DATA2)];
-    println!("bufs = {:?}", &bufs);
     let n = stream
         .write_vectored(&bufs)
         .expect("unable to write vectored to stream");
     assert_eq!(n, DATA1.len() + DATA2.len());
-    println!("bufs = {:?}", &bufs);
 
     expect_events(
         &mut poll,
@@ -123,20 +121,14 @@ where
 
     let mut buf1 = [1; DATA1_LEN];
     let mut buf2 = [2; DATA2_LEN + 1];
-    println!("buf2 = {:?}", buf2);
-    println!("stream = {:?}", stream);
     let mut bufs = [IoSliceMut::new(&mut buf1), IoSliceMut::new(&mut buf2)];
-    println!("bufs = {:?}", &bufs);
     let n = stream
         .read_vectored(&mut bufs)
         .expect("unable to read vectored from stream");
-    // buf2 is changed here, but is incorrectly changed because the last byte was turned into 0.
-    println!("bufs = {:?}", &bufs);
     assert_eq!(n, DATA1.len() + DATA2.len());
     assert_eq!(&buf1, DATA1);
     assert_eq!(&buf2[..DATA2.len()], DATA2);
-    println!("Test about to fail here. {:?}", buf2);
-    assert_eq!(buf2[DATA2.len()], 2); // Last byte should be unchanged. (but it was changed)
+    assert_eq!(buf2[DATA2.len()], 2); // Last byte should be unchanged.
 
     // Close the connection to allow the listener to shutdown.
     drop(stream);

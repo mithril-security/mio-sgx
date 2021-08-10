@@ -12,7 +12,6 @@ use crate::test::util::{
     assert_send, assert_socket_close_on_exec, assert_socket_non_blocking, assert_sync,
     assert_would_block, expect_events, expect_no_events, init_with_poll, temp_file, ExpectEvent,
 };
-use crate::{checked_write, expect_read};
 
 const DEFAULT_BUF_SIZE: usize = 64;
 const TOKEN_1: Token = Token(0);

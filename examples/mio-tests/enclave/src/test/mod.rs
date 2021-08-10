@@ -361,14 +361,13 @@ pub fn test_tcp_stream() {
     print!("Success.\n");
 
     print!("Testing tcp_stream_ipv4()... ");
-    //tcp_stream::tcp_stream_ipv4(); // This test fails.
-    //print!("Success.\n");
+    tcp_stream::tcp_stream_ipv4();
+    print!("Success.\n");
 
     //ipv6 does not work
 
     print!("Testing tcp_stream_std()... ");
-    //tcp_stream::tcp_stream_std(); // This test fails.
-    //print!("Success.\n");
+    tcp_stream::tcp_stream_std();
 
     print!("Testing set_get_ttl()... ");
     tcp_stream::set_get_ttl();
@@ -605,8 +604,6 @@ pub fn test_udp_socket() {
     print!("Testing unconnected_udp_socket_connected_methods()... ");
     udp_socket::unconnected_udp_socket_connected_methods();
     print!("Success.\n");
-    // The test above gets an error, but the wrong one:
-    // 'wanted: address required, got: Identifier removed (os error: 89)'
 
     /* print!("Testing connected_udp_socket_unconnected_methods()... ");
     udp_socket::connected_udp_socket_unconnected_methods();
@@ -759,19 +756,17 @@ pub fn test_unix_stream() {
     unix_stream::unix_stream_send_and_sync();
     print!("Success.\n");
 
-    /* print!("Testing unix_stream_smoke()... ");
+    print!("Testing unix_stream_smoke()... ");
     unix_stream::unix_stream_smoke();
-    print!("Success.\n"); */
-    //Panic
+    print!("Success.\n");
 
     print!("Testing unix_stream_connect()... ");
     unix_stream::unix_stream_connect();
     print!("Success.\n");
 
-    /* print!("Testing unix_stream_from_std()... ");
+    print!("Testing unix_stream_from_std()... ");
     unix_stream::unix_stream_from_std();
-    print!("Success.\n"); */
-    //Panic
+    print!("Success.\n");
 
     print!("Testing unix_stream_pair()... ");
     unix_stream::unix_stream_pair();

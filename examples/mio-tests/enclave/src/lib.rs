@@ -38,21 +38,21 @@ pub extern "C" fn ecall_test(some_string: *const u8, some_len: usize) -> sgx_sta
     let str_slice = unsafe { slice::from_raw_parts(some_string, some_len) };
     let _ = io::stdout().write(str_slice);
 
-    // test::test_waker();
-    // test::test_close_on_drop();
-    // test::test_events();
-    // test::test_interest();
-    // test::test_poll();
-    // test::test_registering();
-    // test::test_regressions();
-    // test::test_tcp_listener();
-    // test::test_tcp_socket();
-    // test::test_tcp_stream(); //Panic
-    // test::test_tcp();
-    test::test_udp_socket(); //Panic
-    // test::test_unix_datagram(); */
-    // test::test_unix_listener();
-    // test::test_unix_stream();
+    test::test_waker();
+    test::test_close_on_drop();
+    test::test_events();
+    test::test_interest();
+    test::test_poll();
+    test::test_registering();
+    test::test_regressions();
+    test::test_tcp_listener();
+    test::test_tcp_socket();
+    test::test_tcp_stream();
+    test::test_tcp();
+    test::test_udp_socket();
+    test::test_unix_datagram();
+    test::test_unix_listener();
+    test::test_unix_stream();
 
 
     sgx_status_t::SGX_SUCCESS
