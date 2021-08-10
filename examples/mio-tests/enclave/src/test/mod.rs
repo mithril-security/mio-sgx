@@ -605,9 +605,9 @@ pub fn test_udp_socket() {
     udp_socket::unconnected_udp_socket_connected_methods();
     print!("Success.\n");
 
-    /* print!("Testing connected_udp_socket_unconnected_methods()... ");
+    print!("Testing connected_udp_socket_unconnected_methods()... ");
     udp_socket::connected_udp_socket_unconnected_methods();
-    print!("Success.\n"); */
+    print!("Success.\n");
     //Panics at: unexpected OK result
     // Linux (and Android) and Windows actually allow `send_to` even if the
     // socket is connected.
