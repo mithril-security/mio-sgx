@@ -28,7 +28,7 @@ macro_rules! cfg_not_os_poll {
 macro_rules! cfg_os_ext {
     ($($item:item)*) => {
         $(
-            #[cfg(feature = "os-ext")]
+            #[cfg(all(feature = "os-ext", not(target_env = "sgx")))]
             #[cfg_attr(docsrs, doc(cfg(feature = "os-ext")))]
             $item
         )*

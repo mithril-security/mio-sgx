@@ -169,3 +169,6 @@ If you want to propose an API change, create an issue to start a
 discussion with the community. Also, feel free to talk with us in Discord.
 
 Finally, be kind. We support the [Rust Code of Conduct](https://www.rust-lang.org/policies/code-of-conduct).
+
+## USE IN SGX
+IMPORTANT: Note that the feature `os-ext` of the crate will be ignored in `target_env="sgx"`.

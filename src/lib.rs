@@ -40,6 +40,8 @@
 //! ## Available features
 //!
 //! The available features are described in the [`features`] module.
+//! IMPORTANT: Note that the feature `os-ext` of the crate will be ignored in `target_env="sgx"`.
+
 #[cfg(target_env = "sgx")]
 extern crate sgx_libc as libc;
 // macros used internally
